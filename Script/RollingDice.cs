@@ -213,9 +213,9 @@ public class RollingDice : MonoBehaviour
                 {
                     if (playerPieces[i].isReady)
                     {
-                        if (canBotKillPiece(playerPieces[i]))
+                        if (canBotKillPiece())
                         {
-                            currentPlayerPiece = playerPieces[i];
+                            // currentPlayerPiece = playerPieces[i];
                             return true;
                         }
 
@@ -259,19 +259,25 @@ public class RollingDice : MonoBehaviour
         return false;
     }
 
-    bool canBotKillPiece(PlayerPiece playerPiece_)
+    bool canBotKillPiece()
     {
-        for (int j = 0; j < pathObjectParent.CommonPathPoint.Length; j++)
+        for (int i = 0; i < playerPieces.Count; i++)
         {
-            if (playerPiece_.transform.position == pathObjectParent.CommonPathPoint[j].transform.position)
+            for (int j = 0; j < pathObjectParent.CommonPathPoint.Length; j++)
             {
-                var killIndex = GameManager.gm.numberOfStepsToMove + j;
-
-                Debug.Log("killIndex: " + killIndex);
-
-                if (redPlayerAtIndex.Contains(killIndex))
+                if (playerPieces[i].transform.position == pathObjectParent.CommonPathPoint[j].transform.position)
                 {
-                    return true;
+                    var killIndex = GameManager.gm.numberOfStepsToMove + j;
+
+                    Debug.Log("j: " + j);
+                    Debug.Log("isContains?: " + redPlayerAtIndex.Contains(killIndex));
+                    Debug.Log("killIndex: " + killIndex);
+
+                    if (redPlayerAtIndex.Contains(killIndex))
+                    {
+                        currentPlayerPiece = playerPieces[i];
+                        return true;
+                    }
                 }
             }
         }
